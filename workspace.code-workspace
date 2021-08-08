@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+    {
+      "path": "C:\\nim"
+    }
+	],
+	"settings": {
+		"files.associations": {
+			"windows.h": "c"
+		}
+	}
+}
