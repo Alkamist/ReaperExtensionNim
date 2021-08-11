@@ -68,9 +68,9 @@ defineLoadApi:
   proc Audio_IsRunning*(): cint {.cdecl.}
   proc Audio_Quit*() {.cdecl.}
   # proc Audio_RegHardwareHook*(isAdd: bool; reg: ptr audio_hook_register_t): cint {.cdecl.}
-  # proc AudioAccessorStateChanged*(accessor: ptr AudioAccessor): bool {.cdecl.}
-  # proc AudioAccessorUpdate*(accessor: ptr AudioAccessor) {.cdecl.}
-  # proc AudioAccessorValidateState*(accessor: ptr AudioAccessor): bool {.cdecl.}
+  # proc AudioAccessorStateChanged*(accessor: AudioAccessor): bool {.cdecl.}
+  # proc AudioAccessorUpdate*(accessor: AudioAccessor) {.cdecl.}
+  # proc AudioAccessorValidateState*(accessor: AudioAccessor): bool {.cdecl.}
   proc BypassFxAllTracks*(bypass: cint) {.cdecl.}
   # proc CalculatePeaks*(srcBlock: ptr PCM_source_transfer_t; pksBlock: ptr PCM_source_peaktransfer_t): cint {.cdecl.}
   # proc CalculatePeaksFloatSrcPtr*(srcBlock: ptr PCM_source_transfer_t; pksBlock: ptr PCM_source_peaktransfer_t): cint {.cdecl.}
@@ -99,8 +99,8 @@ defineLoadApi:
   # proc CreateMIDIInput*(dev: cint): ptr midi_Input {.cdecl.}
   # proc CreateMIDIOutput*(dev: cint; streamMode: bool; msoffset100: ptr cint): ptr midi_Output {.cdecl.}
   proc CreateNewMIDIItemInProj*(track: MediaTrack; starttime: cdouble; endtime: cdouble; qnInOptional: ptr bool): MediaItem {.cdecl.}
-  proc CreateTakeAudioAccessor*(take: MediaItem_Take): ptr AudioAccessor {.cdecl.}
-  proc CreateTrackAudioAccessor*(track: MediaTrack): ptr AudioAccessor {.cdecl.}
+  proc CreateTakeAudioAccessor*(take: MediaItem_Take): AudioAccessor {.cdecl.}
+  proc CreateTrackAudioAccessor*(track: MediaTrack): AudioAccessor {.cdecl.}
   proc CreateTrackSend*(tr: MediaTrack; desttrInOptional: MediaTrack): cint {.cdecl.}
   proc CSurf_FlushUndo*(force: bool) {.cdecl.}
   proc CSurf_GetTouchState*(trackid: MediaTrack; isPan: cint): bool {.cdecl.}
@@ -168,7 +168,7 @@ defineLoadApi:
   proc DeleteTempoTimeSigMarker*(project: ReaProject; markerindex: cint): bool {.cdecl.}
   proc DeleteTrack*(tr: MediaTrack) {.cdecl.}
   proc DeleteTrackMediaItem*(tr: MediaTrack; it: MediaItem): bool {.cdecl.}
-  proc DestroyAudioAccessor*(accessor: ptr AudioAccessor) {.cdecl.}
+  proc DestroyAudioAccessor*(accessor: AudioAccessor) {.cdecl.}
   proc DestroyLocalOscHandler*(local_osc_handler: pointer) {.cdecl.}
   proc DoActionShortcutDialog*(hwnd: HWND; section: ptr KbdSectionInfo; cmdID: cint; shortcutidx: cint): bool {.cdecl.}
   proc Dock_UpdateDockID*(ident_str: cstring; whichDock: cint) {.cdecl.}
@@ -218,10 +218,10 @@ defineLoadApi:
   proc GetAllProjectPlayStates*(ignoreProject: ReaProject): cint {.cdecl.}
   proc GetAppVersion*(): cstring {.cdecl.}
   proc GetArmedCommand*(secOut: cstring; secOut_sz: cint): cint {.cdecl.}
-  proc GetAudioAccessorEndTime*(accessor: ptr AudioAccessor): cdouble {.cdecl.}
-  proc GetAudioAccessorHash*(accessor: ptr AudioAccessor; hashNeed128: cstring) {.cdecl.}
-  proc GetAudioAccessorSamples*(accessor: ptr AudioAccessor; samplerate: cint; numchannels: cint; starttime_sec: cdouble; numsamplesperchannel: cint; samplebuffer: ptr cdouble): cint {.cdecl.}
-  proc GetAudioAccessorStartTime*(accessor: ptr AudioAccessor): cdouble {.cdecl.}
+  proc GetAudioAccessorEndTime*(accessor: AudioAccessor): cdouble {.cdecl.}
+  proc GetAudioAccessorHash*(accessor: AudioAccessor; hashNeed128: cstring) {.cdecl.}
+  proc GetAudioAccessorSamples*(accessor: AudioAccessor; samplerate: cint; numchannels: cint; starttime_sec: cdouble; numsamplesperchannel: cint; samplebuffer: ptr cdouble): cint {.cdecl.}
+  proc GetAudioAccessorStartTime*(accessor: AudioAccessor): cdouble {.cdecl.}
   proc GetAudioDeviceInfo*(attribute: cstring; desc: cstring; desc_sz: cint): bool {.cdecl.}
   proc GetColorTheme*(idx: cint; defval: cint): INT_PTR {.cdecl.}
   proc GetColorThemeStruct*(szOut: ptr cint): pointer {.cdecl.}
@@ -439,14 +439,14 @@ defineLoadApi:
   proc IsREAPER*(): bool {.cdecl.}
   proc IsTrackSelected*(track: MediaTrack): bool {.cdecl.}
   proc IsTrackVisible*(track: MediaTrack; mixer: bool): bool {.cdecl.}
-  proc joystick_create*(guid: ptr GUID): ptr joystick_device {.cdecl.}
-  proc joystick_destroy*(device: ptr joystick_device) {.cdecl.}
+  proc joystick_create*(guid: ptr GUID): joystick_device {.cdecl.}
+  proc joystick_destroy*(device: joystick_device) {.cdecl.}
   proc joystick_enum*(index: cint; namestrOutOptional: cstringArray): cstring {.cdecl.}
-  proc joystick_getaxis*(dev: ptr joystick_device; axis: cint): cdouble {.cdecl.}
-  proc joystick_getbuttonmask*(dev: ptr joystick_device): cuint {.cdecl.}
-  proc joystick_getinfo*(dev: ptr joystick_device; axesOutOptional: ptr cint; povsOutOptional: ptr cint): cint {.cdecl.}
-  proc joystick_getpov*(dev: ptr joystick_device; pov: cint): cdouble {.cdecl.}
-  proc joystick_update*(dev: ptr joystick_device): bool {.cdecl.}
+  proc joystick_getaxis*(dev: joystick_device; axis: cint): cdouble {.cdecl.}
+  proc joystick_getbuttonmask*(dev: joystick_device): cuint {.cdecl.}
+  proc joystick_getinfo*(dev: joystick_device; axesOutOptional: ptr cint; povsOutOptional: ptr cint): cint {.cdecl.}
+  proc joystick_getpov*(dev: joystick_device; pov: cint): cdouble {.cdecl.}
+  proc joystick_update*(dev: joystick_device): bool {.cdecl.}
   proc kbd_enumerateActions*(section: ptr KbdSectionInfo; idx: cint; nameOut: cstringArray): cint {.cdecl.}
   # proc kbd_formatKeyName*(ac: ptr ACCEL; s: cstring) {.cdecl.}
   proc kbd_getCommandName*(cmd: cint; s: cstring; section: ptr KbdSectionInfo) {.cdecl.}
@@ -460,6 +460,56 @@ defineLoadApi:
   proc kbd_RunCommandThroughHooks*(section: ptr KbdSectionInfo; actionCommandID: ptr cint; val: ptr cint; valhw: ptr cint; relmode: ptr cint; hwnd: HWND): bool {.cdecl.}
   proc kbd_translateAccelerator*(hwnd: HWND; msg: ptr MSG; section: ptr KbdSectionInfo): cint {.cdecl.}
   proc kbd_translateMouse*(winmsg: pointer; midimsg: ptr cuchar): bool {.cdecl.}
+  # proc LICE_private_Destroy(bm: LICE_IBitmap) {.cdecl, importc: "LICE__Destroy".}
+  # proc LICE_private_DestroyFont(font: ptr LICE_IFont) {.cdecl, importc: "LICE__DestroyFont".}
+  # proc LICE_private_DrawText(font: ptr LICE_IFont; bm: LICE_IBitmap; str: cstring; strcnt: cint; rect: ptr RECT; dtFlags: UINT): cint {.cdecl, importc: "LICE__DrawText".}
+  # proc LICE_private_GetBits(bm: LICE_IBitmap): pointer {.cdecl, importc: "LICE__GetBits".}
+  # proc LICE_private_GetDC(bm: LICE_IBitmap): HDC {.cdecl, importc: "LICE__GetDC".}
+  # proc LICE_private_GetHeight(bm: LICE_IBitmap): cint {.cdecl, importc: "LICE__GetHeight".}
+  # proc LICE_private_GetRowSpan(bm: LICE_IBitmap): cint {.cdecl, importc: "LICE__GetRowSpan".}
+  # proc LICE_private_GetWidth(bm: LICE_IBitmap): cint {.cdecl, importc: "LICE__GetWidth".}
+  # proc LICE_private_IsFlipped(bm: LICE_IBitmap): bool {.cdecl, importc: "LICE__IsFlipped".}
+  # proc LICE_private_resize(bm: LICE_IBitmap; w: cint; h: cint): bool {.cdecl, importc: "LICE__resize".}
+  # proc LICE_private_SetBkColor(font: ptr LICE_IFont; color: LICE_pixel): LICE_pixel {.cdecl, importc: "LICE__SetBkColor".}
+  # proc LICE_private_SetFromHFont(font: ptr LICE_IFont; hfont: HFONT; flags: cint) {.cdecl, importc: "LICE__SetFromHFont".}
+  # proc LICE_private_SetTextColor(font: ptr LICE_IFont; color: LICE_pixel): LICE_pixel {.cdecl, importc: "LICE__SetTextColor".}
+  # proc LICE_private_SetTextCombineMode(ifont: ptr LICE_IFont; mode: cint; alpha: cfloat) {.cdecl, importc: "LICE__SetTextCombineMode".}
+  # proc LICE_Arc(dest: LICE_IBitmap; cx: cfloat; cy: cfloat; r: cfloat; minAngle: cfloat; maxAngle: cfloat; color: LICE_pixel; alpha: cfloat; mode: cint; aa: bool) {.cdecl.}
+  # proc LICE_Blit(dest: LICE_IBitmap; src: LICE_IBitmap; dstx: cint; dsty: cint; srcx: cint; srcy: cint; srcw: cint; srch: cint; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_Blur(dest: LICE_IBitmap; src: LICE_IBitmap; dstx: cint; dsty: cint; srcx: cint; srcy: cint; srcw: cint; srch: cint) {.cdecl.}
+  # proc LICE_BorderedRect(dest: LICE_IBitmap; x: cint; y: cint; w: cint; h: cint; bgcolor: LICE_pixel; fgcolor: LICE_pixel; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_Circle(dest: LICE_IBitmap; cx: cfloat; cy: cfloat; r: cfloat; color: LICE_pixel; alpha: cfloat; mode: cint; aa: bool) {.cdecl.}
+  # proc LICE_Clear(dest: LICE_IBitmap; color: LICE_pixel) {.cdecl.}
+  # proc LICE_ClearRect(dest: LICE_IBitmap; x: cint; y: cint; w: cint; h: cint; mask: LICE_pixel; orbits: LICE_pixel) {.cdecl.}
+  # proc LICE_ClipLine(pX1Out: ptr cint; pY1Out: ptr cint; pX2Out: ptr cint; pY2Out: ptr cint; xLo: cint; yLo: cint; xHi: cint; yHi: cint): bool {.cdecl.}
+  # proc LICE_Copy(dest: LICE_IBitmap; src: LICE_IBitmap) {.cdecl.}
+  # proc LICE_CreateBitmap(mode: cint; w: cint; h: cint): LICE_IBitmap {.cdecl.}
+  # proc LICE_CreateFont(): ptr LICE_IFont {.cdecl.}
+  # proc LICE_DrawCBezier(dest: LICE_IBitmap; xstart: cdouble; ystart: cdouble; xctl1: cdouble; yctl1: cdouble; xctl2: cdouble; yctl2: cdouble; xend: cdouble; yend: cdouble; color: LICE_pixel; alpha: cfloat; mode: cint; aa: bool; tol: cdouble) {.cdecl.}
+  # proc LICE_DrawChar(bm: LICE_IBitmap; x: cint; y: cint; c: char; color: LICE_pixel; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_DrawGlyph(dest: LICE_IBitmap; x: cint; y: cint; color: LICE_pixel; alphas: ptr LICE_pixel_chan; glyph_w: cint; glyph_h: cint; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_DrawRect(dest: LICE_IBitmap; x: cint; y: cint; w: cint; h: cint; color: LICE_pixel; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_DrawText(bm: LICE_IBitmap; x: cint; y: cint; string: cstring; color: LICE_pixel; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_FillCBezier(dest: LICE_IBitmap; xstart: cdouble; ystart: cdouble; xctl1: cdouble; yctl1: cdouble; xctl2: cdouble; yctl2: cdouble; xend: cdouble; yend: cdouble; yfill: cint; color: LICE_pixel; alpha: cfloat; mode: cint; aa: bool; tol: cdouble) {.cdecl.}
+  # proc LICE_FillCircle(dest: LICE_IBitmap; cx: cfloat; cy: cfloat; r: cfloat; color: LICE_pixel; alpha: cfloat; mode: cint; aa: bool) {.cdecl.}
+  # proc LICE_FillConvexPolygon(dest: LICE_IBitmap; x: ptr cint; y: ptr cint; npoints: cint; color: LICE_pixel; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_FillRect(dest: LICE_IBitmap; x: cint; y: cint; w: cint; h: cint; color: LICE_pixel; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_FillTrapezoid(dest: LICE_IBitmap; x1a: cint; x1b: cint; y1: cint; x2a: cint; x2b: cint; y2: cint; color: LICE_pixel; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_FillTriangle(dest: LICE_IBitmap; x1: cint; y1: cint; x2: cint; y2: cint; x3: cint; y3: cint; color: LICE_pixel; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_GetPixel(bm: LICE_IBitmap; x: cint; y: cint): LICE_pixel {.cdecl.}
+  # proc LICE_GradRect(dest: LICE_IBitmap; dstx: cint; dsty: cint; dstw: cint; dsth: cint; ir: cfloat; ig: cfloat; ib: cfloat; ia: cfloat; drdx: cfloat; dgdx: cfloat; dbdx: cfloat; dadx: cfloat; drdy: cfloat; dgdy: cfloat; dbdy: cfloat; dady: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_Line(dest: LICE_IBitmap; x1: cfloat; y1: cfloat; x2: cfloat; y2: cfloat; color: LICE_pixel; alpha: cfloat; mode: cint; aa: bool) {.cdecl.}
+  # proc LICE_ThickFLine(dest: LICE_IBitmap, x1, y1, x2, y2: cdouble, color: LICE_pixel, alpha: cfloat, mode, wid: cint) {.cdecl.}
+  # proc LICE_LineInt(dest: LICE_IBitmap; x1: cint; y1: cint; x2: cint; y2: cint; color: LICE_pixel; alpha: cfloat; mode: cint; aa: bool) {.cdecl.}
+  # proc LICE_LoadPNG(filename: cstring; bmp: LICE_IBitmap): LICE_IBitmap {.cdecl.}
+  # proc LICE_LoadPNGFromResource(hInst: HINSTANCE; resid: cstring; bmp: LICE_IBitmap): LICE_IBitmap {.cdecl.}
+  # proc LICE_MeasureText(string: cstring; w: ptr cint; h: ptr cint) {.cdecl.}
+  # proc LICE_MultiplyAddRect(dest: LICE_IBitmap; x: cint; y: cint; w: cint; h: cint; rsc: cfloat; gsc: cfloat; bsc: cfloat; asc: cfloat; radd: cfloat; gadd: cfloat; badd: cfloat; aadd: cfloat) {.cdecl.}
+  # proc LICE_PutPixel(bm: LICE_IBitmap; x: cint; y: cint; color: LICE_pixel; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_RotatedBlit(dest: LICE_IBitmap; src: LICE_IBitmap; dstx: cint; dsty: cint; dstw: cint; dsth: cint; srcx: cfloat; srcy: cfloat; srcw: cfloat; srch: cfloat; angle: cfloat; cliptosourcerect: bool; alpha: cfloat; mode: cint; rotxcent: cfloat; rotycent: cfloat) {.cdecl.}
+  # proc LICE_RoundRect(drawbm: LICE_IBitmap; xpos: cfloat; ypos: cfloat; w: cfloat; h: cfloat; cornerradius: cint; col: LICE_pixel; alpha: cfloat; mode: cint; aa: bool) {.cdecl.}
+  # proc LICE_ScaledBlit(dest: LICE_IBitmap; src: LICE_IBitmap; dstx: cint; dsty: cint; dstw: cint; dsth: cint; srcx: cfloat; srcy: cfloat; srcw: cfloat; srch: cfloat; alpha: cfloat; mode: cint) {.cdecl.}
+  # proc LICE_SimpleFill(dest: LICE_IBitmap; x: cint; y: cint; newcolor: LICE_pixel; comparemask: LICE_pixel; keepmask: LICE_pixel) {.cdecl.}
   proc LocalizeString*(src_string: cstring; section: cstring; flagsOptional: cint): cstring {.cdecl.}
   proc Loop_OnArrow*(project: ReaProject; direction: cint): bool {.cdecl.}
   proc Main_OnCommand*(command: cint; flag: cint) {.cdecl.}
@@ -807,4 +857,4 @@ defineLoadApi:
   proc ValidatePtr*(`pointer`: pointer; ctypename: cstring): bool {.cdecl.}
   proc ValidatePtr2*(proj: ReaProject; `pointer`: pointer; ctypename: cstring): bool {.cdecl.}
   proc ViewPrefs*(page: cint; pageByName: cstring) {.cdecl.}
-  # proc WDL_VirtualWnd_ScaledBlitBG*(dest: LICE_IBitmap; src: ptr WDL_VirtualWnd_BGCfg; destx: cint; desty: cint; destw: cint; desth: cint; clipx: cint; clipy: cint; clipw: cint; cliph: cint; alpha: cfloat; mode: cint): bool {.cdecl.}
+  # proc WDL_VirtualWnd_ScaledBlitBG*(dest: LICE_IBitmap; src: WDL_VirtualWnd_BGCfg; destx: cint; desty: cint; destw: cint; desth: cint; clipx: cint; clipy: cint; clipw: cint; cliph: cint; alpha: cfloat; mode: cint): bool {.cdecl.}

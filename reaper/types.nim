@@ -1,57 +1,6 @@
-when defined(cpu64):
-  type
-    INT_PTR* = int64
-    UINT_PTR* = int64
-    LONG_PTR* = int64
-    ULONG_PTR* = int64
-else:
-  type
-    INT_PTR* = int32
-    UINT_PTR* = int32
-    LONG_PTR* = int32
-    ULONG_PTR* = int32
+import winim/lean
 
-type
-  BYTE* = uint8
-  UINT* = int32
-  WORD* = uint16
-  DWORD* = int32
-  LONG* = int32
-  WPARAM* = UINT_PTR
-  LPARAM* = LONG_PTR
-  HANDLE* = int
-  HINSTANCE* = HANDLE
-  HWND* = HANDLE
-  HMENU* = HANDLE
-
-  POINT* {.pure.} = object
-    x*: LONG
-    y*: LONG
-
-  RECT* {.pure.} = object
-    left*: LONG
-    top*: LONG
-    right*: LONG
-    bottom*: LONG
-
-  MSG* {.pure.} = object
-    hwnd*: HWND
-    message*: UINT
-    wParam*: WPARAM
-    lParam*: LPARAM
-    time*: DWORD
-    pt*: POINT
-
-  ACCEL* {.pure.} = object
-    fVirt*: BYTE
-    key*: WORD
-    cmd*: WORD
-
-  GUID* {.pure.} = object
-    Data1*: int32
-    Data2*: uint16
-    Data3*: uint16
-    Data4*: array[8, uint8]
+export lean
 
 type
   ReaProject* = distinct pointer
@@ -63,6 +12,11 @@ type
   AudioAccessor* = distinct pointer
   WDL_VirtualWnd_BGCfg* = distinct pointer
   joystick_device* = distinct pointer
+
+  # LICE_IBitmap* = distinct pointer
+  # LICE_IFont* = distinct pointer
+  # LICE_pixel* = cuint
+  # LICE_pixel_chan* = cuchar
 
   reaper_plugin_info_t* = object
     caller_version*: cint
