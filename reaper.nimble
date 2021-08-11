@@ -11,3 +11,4 @@ backend = "cpp"
 
 requires "nim >= 1.4.0"
 requires "winim"
+requires "ezwin"
