@@ -1,8 +1,12 @@
 import std/tables
 import types, functions
 
-# globalRaiseHook = proc(e: ref Exception): bool {.gcsafe, locks: 0.} =
-#   ShowConsoleMsg("An exception was raised: " & e.msg & "\n")
+globalRaiseHook = proc(e: ref Exception): bool {.gcsafe, locks: 0.} =
+  ShowMessageBox(
+    msg = e.msg & "\n\n" & "Stack Trace:\n\n" & e.getStackTrace(),
+    title = "Alkamist Extension Error:",
+    `type` = 0, # Ok
+  )
 
 var
   hInstance*: HINSTANCE
