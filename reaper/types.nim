@@ -1,4 +1,4 @@
-import winim/lean
+import pkg/winim/lean
 
 export lean
 
@@ -27,13 +27,13 @@ type
   MIDI_event_t* = object
     frame_offset*: cint
     size*: cint
-    midi_message*: array[4, cuchar]
+    midi_message*: array[4, uint8]
 
   MIDI_eventprops* = object
     ppqpos*: cdouble
     ppqpos_end_or_bezier_tension*: cdouble
     flag*: char
-    msg*: array[3, cuchar]
+    msg*: array[3, uint8]
     varmsg*: cstring
     varmsglen*: cint
     setflag*: cint

@@ -1,5 +1,5 @@
 import std/macros
-import types
+import ./types
 
 macro defineLoadApi(procs: untyped): untyped =
   let getApiIdent = ident "getAPI"
