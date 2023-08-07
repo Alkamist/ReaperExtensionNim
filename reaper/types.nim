@@ -1,6 +1,71 @@
-import pkg/winim/lean
+when defined(cpu64):
+  type
+    INT_PTR* = int64
+    UINT_PTR* = uint64
+    LONG_PTR* = int64
+else:
+  type
+    INT_PTR* = cint
+    UINT_PTR* = cuint
+    LONG_PTR* = clong
 
-export lean
+type
+  LPVOID* = pointer
+  HANDLE* = LPVOID
+  HINSTANCE* = HANDLE
+  HMENU* = HANDLE
+  HWND* = HANDLE
+  HICON* = HANDLE
+  HCURSOR* = HANDLE
+  HBRUSH* = HANDLE
+  HDC* = HANDLE
+  HGLRC* = HANDLE
+  HMODULE* = HINSTANCE
+
+  BOOL* = cint
+  UINT* = cuint
+  LONG* = clong
+  SHORT* = cshort
+  WORD* = cushort
+  DWORD* = culong
+  BYTE* = uint8
+  CHAR* = char
+
+  LPSTR* = cstring
+  LPCSTR* = cstring
+
+  LPARAM* = LONG_PTR
+  WPARAM* = UINT_PTR
+  LRESULT* = LONG_PTR
+
+  POINT* {.bycopy.} = object
+    x*: LONG
+    y*: LONG
+
+  RECT* {.bycopy.} = object
+    left*: LONG
+    top*: LONG
+    right*: LONG
+    bottom*: LONG
+
+  MSG* {.bycopy.} = object
+    hwnd*: HWND
+    message*: UINT
+    wParam*: WPARAM
+    lParam*: LPARAM
+    time*: DWORD
+    pt*: POINT
+
+  ACCEL* {.bycopy.} = object
+    fVirt*: uint8
+    key*: uint16
+    cmd*: uint16
+
+  GUID* {.bycopy.} = object
+    Data1*: culong
+    Data2*: cushort
+    Data3*: cushort
+    Data4*: array[8, uint8]
 
 type
   ReaProject* = distinct pointer
@@ -13,23 +78,18 @@ type
   WDL_VirtualWnd_BGCfg* = distinct pointer
   joystick_device* = distinct pointer
 
-  # LICE_IBitmap* = distinct pointer
-  # LICE_IFont* = distinct pointer
-  # LICE_pixel* = cuint
-  # LICE_pixel_chan* = cuchar
-
-  reaper_plugin_info_t* = object
+  reaper_plugin_info_t* {.bycopy.} = object
     caller_version*: cint
     hwnd_main*: HWND
     Register*: proc(name: cstring; infostruct: pointer): cint {.cdecl.}
     GetFunc*: proc(name: cstring): pointer {.cdecl.}
 
-  MIDI_event_t* = object
+  MIDI_event_t* {.bycopy.} = object
     frame_offset*: cint
     size*: cint
     midi_message*: array[4, uint8]
 
-  MIDI_eventprops* = object
+  MIDI_eventprops* {.bycopy.} = object
     ppqpos*: cdouble
     ppqpos_end_or_bezier_tension*: cdouble
     flag*: char
@@ -38,7 +98,7 @@ type
     varmsglen*: cint
     setflag*: cint
 
-  REAPER_cue* = object
+  REAPER_cue* {.bycopy.} = object
     m_id*: cint
     m_time*: cdouble
     m_endtime*: cdouble
@@ -47,7 +107,7 @@ type
     m_flags*: cint
     resvd*: array[124, char]
 
-  REAPER_inline_positioninfo* = object
+  REAPER_inline_positioninfo* {.bycopy.} = object
     draw_start_time*: cdouble
     draw_start_y*: cint
     pixels_per_second*: cdouble
@@ -57,7 +117,7 @@ type
     mouse_y*: cint
     extraParms*: array[8, pointer]
 
-  midi_quantize_mode_t* = object
+  midi_quantize_mode_t* {.bycopy.} = object
     doquant*: bool
     movemode*: char
     sizemode*: char
@@ -67,30 +127,30 @@ type
     range_min*: char
     range_max*: char
 
-  accelerator_register_t* = object
+  accelerator_register_t* {.bycopy.} = object
     translateAccel*: proc(msg: ptr MSG, ctx: ptr accelerator_register_t): cint {.cdecl.}
     isLocal*: bool
     user*: pointer
 
-  custom_action_register_t* = object
+  custom_action_register_t* {.bycopy.} = object
     uniqueSectionId*: cint
     idStr*: cstring
     name*: cstring
     extra*: pointer
 
-  gaccel_register_t* = object
+  gaccel_register_t* {.bycopy.} = object
     accel*: ACCEL
     desc*: cstring
 
-  action_help_t* = object
+  action_help_t* {.bycopy.} = object
     action_desc*: cstring
     action_help*: cstring
 
-  editor_register_t* = object
+  editor_register_t* {.bycopy.} = object
     editFile*: proc(filename: cstring; parent: HWND; trackidx: cint): cint {.cdecl.}
     wouldHandle*: proc(filename: cstring): cstring {.cdecl.}
 
-  prefs_page_register_t* = object
+  prefs_page_register_t* {.bycopy.} = object
     idstr*: cstring
     displayname*: cstring
     create*: proc(par: HWND): HWND {.cdecl.}
@@ -101,16 +161,16 @@ type
     hwndCache*: HWND
     extra*: array[64, char]
 
-  KbdCmd* = object
+  KbdCmd* {.bycopy.} = object
     cmd*: DWORD
     text*: cstring
 
-  KbdKeyBindingInfo* = object
+  KbdKeyBindingInfo* {.bycopy.} = object
     key*: cint
     cmd*: cint
     flags*: cint
 
-  KbdSectionInfo* = object
+  KbdSectionInfo* {.bycopy.} = object
     uniqueID*: cint
     name*: cstring
     action_list*: ptr KbdCmd

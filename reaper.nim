@@ -1,3 +1,3 @@
 import reaper/types; export types
-import reaper/functions; export functions
+import reaper/api; export api
 import reaper/extension; export extension
